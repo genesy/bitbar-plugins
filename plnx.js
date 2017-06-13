@@ -4,7 +4,7 @@ const request = require('request');
 const _ = require('lodash');
 const fs = require('fs');
 
-const config = require('./config');
+const config = require('./config/config');
 
 const api_key= config.api_key;
 const api_secret= config.api_secret;

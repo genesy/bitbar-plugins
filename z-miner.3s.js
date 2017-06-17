@@ -43,11 +43,11 @@ function getMinerByUrl(url, name) {
 
 const MINERS = [
   {
-    name: 'Miner1',
+    name: 'M1',
     url: 'http://192.168.0.11:3333'
   },
   {
-    name: 'Miner2',
+    name: 'M2',
     url: 'http://192.168.0.12:3333'
   }
 ];
@@ -78,7 +78,7 @@ getMiners(MINERS).then((body) => {
   const bitbarArray = [];
   let text = '';
   _.each(body.miners, (miner, i, arr) => {
-    text+= miner.name+': ' + miner.totalHashRate + 'mh/s';
+    text+= miner.name+': ' + parseInt(miner.totalHashRate);
     if(i !== arr.length -1) {
       text += ' - '
     }

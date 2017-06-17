@@ -4,7 +4,7 @@ const request = require('request');
 const _ = require('lodash');
 const fs = require('fs');
 
-const config = require('./config/config');
+const config = require('../config/config');
 
 const api_key= config.api_key;
 const api_secret= config.api_secret;
@@ -51,7 +51,7 @@ function getBalance(auth_id, decimalPlace = 5) {
     let DATA = {}
 
     PREVIOUS_BALANCE = totalBtcValue;
-    totalBtcValue = totalBtcValue.toFixed(5);
+    totalBtcValue = totalBtcValue.toFixed(decimalPlace);
     DATA = {
       total: totalBtcValue,
       balances,
@@ -61,15 +61,12 @@ function getBalance(auth_id, decimalPlace = 5) {
   })
 }
 
-getBalance(34876, 2).then((balance) => {
-  showBitBar(balance)
-}, () => {
-});
 
-function showBitBar(balance) {
+
+function showBitBar(balance, name) {
   const bitbarArray = [];
   bitbarArray.push({
-    text: 'BTC: ' + balance.total
+    text: name + ': ' +  balance.total + 'b'
   });
   bitbarArray.push(bitbar.sep);
 
@@ -80,4 +77,10 @@ function showBitBar(balance) {
     });
   })
   bitbar(bitbarArray)
+}
+
+module.exports = function showBalance(options) {
+  getBalance(options.auth_id, 3).then((balance) => {
+    showBitBar(balance, options.name)
+  });
 }
